@@ -1,0 +1,19 @@
+.env
+
+# Binaries for the project
+/weight-tracker
+/bin/
+
+# Go-related files
+/pkg/
+/go.sum
+/go.mod
+
+# Database file
+weight.db
+
+# SQLC and Goose files
+/internal/db/sqlc
+
+# Editor and IDE files
+.vscode/

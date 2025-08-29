@@ -1,7 +1,10 @@
 package main
 
-import "github.com/BlochLior/weight-tracker/cmd"
+import (
+	"github.com/BlochLior/weight-tracker/cmd/tracker"
+	_ "github.com/mattn/go-sqlite3"
+)
 
 func main() {
-	cmd.Execute()
+	tracker.Execute()
 }
