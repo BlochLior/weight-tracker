@@ -5,3 +5,35 @@ INSERT INTO weights (
     ?, ?, ?, ?
 )
 RETURNING *;
+
+-- name: ListWeightsDateAsc :many
+SELECT * FROM weights
+WHERE
+    (@start_date IS NULL OR date >= @start_date)
+    AND (@end_date IS NULL OR date <= @end_date)
+ORDER BY date ASC
+LIMIT @row_limit;
+
+-- name: ListWeightsDateDesc :many
+SELECT * FROM weights
+WHERE
+    (@start_date IS NULL OR date >= @start_date)
+    AND (@end_date IS NULL OR date <= @end_date)
+ORDER BY date DESC
+LIMIT @row_limit;
+
+-- name: ListWeightsWeightAsc :many
+SELECT * FROM weights
+WHERE
+    (@start_date IS NULL OR date >= @start_date)
+    AND (@end_date IS NULL OR date <= @end_date)
+ORDER BY weight ASC
+LIMIT @row_limit;
+
+-- name: ListWeightsWeightDesc :many
+SELECT * FROM weights
+WHERE
+    (@start_date IS NULL OR date >= @start_date)
+    AND (@end_date IS NULL OR date <= @end_date)
+ORDER BY weight DESC
+LIMIT @row_limit;
