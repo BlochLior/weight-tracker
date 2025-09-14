@@ -2,6 +2,7 @@ package tracker
 
 import (
 	"database/sql"
+	"fmt"
 	"path/filepath"
 	"testing"
 
@@ -31,4 +32,22 @@ func setupTestDB(t *testing.T) *sql.DB {
 	}
 
 	return db
+}
+
+// failedEntryCreationString returns a formatted error message for test entry creation failures.
+// This helper is used across multiple test files to maintain consistent error messaging.
+func failedEntryCreationString(err error) string {
+	return fmt.Sprintf("Failed to create test entry: %v", err)
+}
+
+// failedTestEntryAdditionString returns a formatted error message for test entry addition failures.
+// This helper is used across multiple test files to maintain consistent error messaging.
+func failedTestEntryAdditionString(err error) string {
+	return fmt.Sprintf("Failed to add test entry: %v", err)
+}
+
+// unexpectedErrorString returns a formatted error message for unexpected errors in tests.
+// This helper is used across multiple test files to maintain consistent error messaging.
+func unexpectedErrorString(err error) string {
+	return fmt.Sprintf("unexpected error: %v", err)
 }

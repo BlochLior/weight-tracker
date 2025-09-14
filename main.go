@@ -6,5 +6,6 @@ import (
 )
 
 func main() {
+	// Application entry point for Cobra apps
 	tracker.Execute()
 }

@@ -3,6 +3,7 @@ module github.com/BlochLior/weight-tracker
 go 1.24.4
 
 require (
+	github.com/go-echarts/go-echarts/v2 v2.6.2
 	github.com/joho/godotenv v1.5.1
 	github.com/mattn/go-sqlite3 v1.14.32
 	github.com/pressly/goose/v3 v3.25.0

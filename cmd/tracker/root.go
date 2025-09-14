@@ -19,6 +19,7 @@ func Execute() error {
 func init() {
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(listCmd)
-	// rootCmd.AddCommand(graphCmd)
-	// rootCmd.AddCommand(removeCmd)
+	rootCmd.AddCommand(deleteCmd)
+	rootCmd.AddCommand(updateCmd)
+	rootCmd.AddCommand(statsCmd)
 }

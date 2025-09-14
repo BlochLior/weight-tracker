@@ -10,10 +10,14 @@
 /go.mod
 
 # Database file
+weight_tracker.db
 weight.db
 
 # SQLC and Goose files
 /internal/db/sqlc
+
+# Generated chart files
+/charts/
 
 # Editor and IDE files
 .vscode/
