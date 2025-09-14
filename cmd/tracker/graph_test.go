@@ -78,6 +78,10 @@ func TestGenerateWeightChart(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Use temporary directory for test charts
+			tempDir := t.TempDir()
+			tt.options.TestOutputDir = tempDir
+
 			outputPath, err := GenerateWeightChart(tt.entries, tt.options)
 
 			if tt.wantErr {
@@ -104,8 +108,7 @@ func TestGenerateWeightChart(t *testing.T) {
 					t.Errorf("GenerateWeightChart() HTML file was not created: %s", outputPath)
 				}
 
-				// Clean up test file
-				defer os.Remove(outputPath)
+				// No cleanup needed - t.TempDir() automatically cleans up
 			}
 		})
 	}
@@ -139,9 +142,12 @@ func TestGenerateHTMLChart(t *testing.T) {
 		{ID: 3, Weight: 75.2, Date: baseDate.AddDate(0, 1, 0), Unit: "kg"},  // Feb 1
 	}
 
+	// Use temporary directory for test charts
+	tempDir := t.TempDir()
 	outputPath, err := generateHTMLChart(testEntries, GraphOptions{
-		Title:      "Test HTML Chart",
-		OutputFile: "test-html-chart.html",
+		Title:         "Test HTML Chart",
+		OutputFile:    "test-html-chart.html",
+		TestOutputDir: tempDir,
 	})
 
 	if err != nil {
@@ -159,8 +165,7 @@ func TestGenerateHTMLChart(t *testing.T) {
 		t.Errorf("generateHTMLChart() HTML file was not created: %s", outputPath)
 	}
 
-	// Clean up test file
-	defer os.Remove(outputPath)
+	// No cleanup needed - t.TempDir() automatically cleans up
 }
 
 func TestEnsureOutputDir(t *testing.T) {
@@ -192,7 +197,9 @@ func TestEnsureOutputDir(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			outputPath, err := ensureOutputDir(tt.outputFile)
+			// Use temporary directory for test charts
+			tempDir := t.TempDir()
+			outputPath, err := ensureOutputDir(tt.outputFile, tempDir)
 
 			if tt.wantErr {
 				if err == nil {
@@ -212,8 +219,7 @@ func TestEnsureOutputDir(t *testing.T) {
 				t.Errorf("ensureOutputDir() directory was not created: %s", dir)
 			}
 
-			// Clean up test directory
-			defer os.RemoveAll("charts")
+			// No cleanup needed - t.TempDir() automatically cleans up
 		})
 	}
 }

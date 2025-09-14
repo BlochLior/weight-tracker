@@ -102,13 +102,13 @@ go build -o weight-tracker github.com/BlochLior/weight-tracker
 ./weight-tracker add 75.5
 
 # With specific date and unit
-./weight-tracker add 165.3 --date 01-15-2024 --unit lbs
+./weight-tracker add 165.3 --date 15-01-2024 --unit lbs
 
 # With note
 ./weight-tracker add 75.5 --note "After workout"
 
 # All options
-./weight-tracker add 75.5 --date 01-15-2024 --unit kg --note "Morning weight"
+./weight-tracker add 75.5 --date 15-01-2024 --unit kg --note "Morning weight"
 ```
 
 #### List Entries
@@ -117,7 +117,7 @@ go build -o weight-tracker github.com/BlochLior/weight-tracker
 ./weight-tracker list
 
 # Filter by date range
-./weight-tracker list --from 01-01-2024 --to 01-31-2024
+./weight-tracker list --from 01-01-2024 --to 31-01-2024
 
 # Filter by unit
 ./weight-tracker list --unit kg
@@ -145,7 +145,7 @@ go build -o weight-tracker github.com/BlochLior/weight-tracker
 ./weight-tracker update 1 --weight 76.0 --note "Updated note"
 
 # Update date
-./weight-tracker update 1 --date 01-16-2024
+./weight-tracker update 1 --date 16-01-2024
 
 # Update unit
 ./weight-tracker update 1 --unit lbs

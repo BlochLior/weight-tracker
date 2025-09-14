@@ -32,11 +32,16 @@ type GraphOptions struct {
 	Width      int
 	Height     int
 	Title      string
+	// TestOutputDir allows tests to specify a custom output directory
+	TestOutputDir string
 }
 
 // ensureOutputDir creates the output directory if it doesn't exist
-func ensureOutputDir(filename string) (string, error) {
+func ensureOutputDir(filename string, testOutputDir string) (string, error) {
 	outputDir := "charts"
+	if testOutputDir != "" {
+		outputDir = testOutputDir
+	}
 
 	// If filename is provided, use it; otherwise generate a default
 	if filename == "" {
@@ -230,10 +235,32 @@ func generateHTMLChart(entries []WeightEntry, options GraphOptions) (string, err
 		startTime := validEntries[0].Date
 
 		// Create X-axis data with time-based positioning
-		for _, entry := range validEntries {
+		for i, entry := range validEntries {
 			// Calculate position as days from start
 			daysFromStart := entry.Date.Sub(startTime).Hours() / 24
-			xAxisData = append(xAxisData, fmt.Sprintf("%.1f", daysFromStart))
+
+			// Format X-axis label more meaningfully
+			var xLabel string
+			if i == 0 {
+				// First entry should show as "Start"
+				xLabel = "Start"
+			} else if daysFromStart < 1 {
+				// Less than a day - show hours
+				hoursFromStart := entry.Date.Sub(startTime).Hours()
+				xLabel = fmt.Sprintf("%.0fh", hoursFromStart)
+			} else if daysFromStart < 7 {
+				// Less than a week - show days with decimal
+				xLabel = fmt.Sprintf("%.1fd", daysFromStart)
+			} else if daysFromStart < 30 {
+				// Less than a month - show days as integers
+				xLabel = fmt.Sprintf("%.0fd", daysFromStart)
+			} else {
+				// More than a month - show weeks
+				weeksFromStart := daysFromStart / 7
+				xLabel = fmt.Sprintf("%.1fw", weeksFromStart)
+			}
+
+			xAxisData = append(xAxisData, xLabel)
 			yAxisData = append(yAxisData, opts.LineData{Value: entry.Weight})
 		}
 	}
@@ -276,9 +303,7 @@ func generateHTMLChart(entries []WeightEntry, options GraphOptions) (string, err
 		}),
 		charts.WithXAxisOpts(opts.XAxis{
 			Name: "Days from Start",
-			Type: "value",
-			Min:  "dataMin",
-			Max:  "dataMax",
+			Type: "category",
 			AxisLabel: &opts.AxisLabel{
 				Show: &[]bool{true}[0],
 			},
@@ -304,7 +329,7 @@ func generateHTMLChart(entries []WeightEntry, options GraphOptions) (string, err
 		)
 
 	// Generate HTML with proper output directory
-	outputFile, err := ensureOutputDir(options.OutputFile)
+	outputFile, err := ensureOutputDir(options.OutputFile, options.TestOutputDir)
 	if err != nil {
 		return "", err
 	}

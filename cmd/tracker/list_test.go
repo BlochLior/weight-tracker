@@ -744,10 +744,11 @@ func TestListCommand_CLI_Integration_Graph(t *testing.T) {
 
 					// Generate the chart
 					graphOptions := GraphOptions{
-						OutputType: outputType,
-						OutputFile: graphFile,
-						Width:      800,
-						Height:     600,
+						OutputType:    outputType,
+						OutputFile:    graphFile,
+						Width:         800,
+						Height:        600,
+						TestOutputDir: t.TempDir(), // Use temporary directory for test charts
 					}
 
 					outputPath, err := GenerateWeightChart(entries, graphOptions)
