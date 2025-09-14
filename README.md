@@ -334,6 +334,97 @@ goose -dir migrations create migration_name sql
 sqlc generate
 ```
 
+## 🤝 Contributing
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/BlochLior/weight-tracker.git
+cd weight-tracker
+```
+
+### Build the Project
+
+```bash
+# Download dependencies
+go mod download
+
+# Build the application
+go build -o weight-tracker github.com/BlochLior/weight-tracker
+```
+
+### Run the Project
+
+```bash
+# Run with Go (development)
+go run main.go add 75.5
+
+# Or run the built binary
+./weight-tracker add 75.5
+```
+
+### Run the Tests
+
+```bash
+# Run all tests
+go test ./cmd/tracker
+
+# Run with verbose output
+go test ./cmd/tracker -v
+
+# Run with coverage
+go test ./cmd/tracker -cover
+
+# Run specific test suites
+go test ./cmd/tracker -run "TestAddCommand"
+go test ./cmd/tracker -run "TestStatsCommand"
+```
+
+### Development Setup
+
+1. **Set up your environment**:
+   ```bash
+   # Create .env file for local development
+   echo "DATABASE_PATH=./weight_tracker_dev.db" > .env
+   echo "DATE_INPUT_FORMAT=dd-mm-yyyy" >> .env
+   echo "DATE_DISPLAY_FORMAT=dd-mm-yyyy" >> .env
+   echo "DEFAULT_UNIT=kg" >> .env
+   ```
+
+2. **Run database migrations**:
+   ```bash
+   goose -dir migrations sqlite3 ./weight_tracker_dev.db up
+   ```
+
+3. **Generate sqlc code** (if you modify `queries.sql`):
+   ```bash
+   sqlc generate
+   ```
+
+### Submit a Pull Request
+
+If you'd like to contribute:
+
+1. **Fork the repository** on GitHub
+2. **Create a feature branch** from `main`:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Make your changes** and ensure all tests pass:
+   ```bash
+   go test ./cmd/tracker
+   ```
+4. **Commit your changes** with clear, descriptive messages
+5. **Push to your fork** and open a pull request to the `main` branch
+
+### Contribution Guidelines
+
+- **Code Style**: Follow Go conventions and run `gofmt`
+- **Testing**: Add tests for new functionality
+- **Documentation**: Update README.md for new features
+- **Commits**: Use clear, descriptive commit messages
+- **Pull Requests**: Provide a clear description of changes
+
 ## Testing
 
 The application includes comprehensive test coverage:
