@@ -365,6 +365,5 @@ The application includes comprehensive test coverage:
 - **sqlc**: Type-safe SQL code generation
 - **goose**: Database migration management
 
-### Chart Dependencies
+### External Chart Dependencies
 - **go-echarts**: HTML chart generation
-- **Custom ASCII**: Terminal chart rendering
